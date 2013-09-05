@@ -31,7 +31,7 @@ class HealthMonitor
       result[target.type] ||= []
       result[target.type] << res
       
-      result[:status] = :down if res[:status] == :down
+      result[:status] = :down if res[:status].to_sym == :down
     end
 
     self.status = result[:status]
