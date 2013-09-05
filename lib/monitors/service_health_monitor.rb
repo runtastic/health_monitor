@@ -12,6 +12,7 @@ class ServiceHealthMonitor < HealthMonitor
   end
 
   def get_status
+    result[:info] = nil
 
     begin
       self.time = Benchmark.measure do
