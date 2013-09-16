@@ -12,10 +12,6 @@ Add the gem to your Gemfile
 
 Add the middleware to your config.
 
-f.e.: 
-
-    gem 'health_monitor', git: "ssh://git@stash.runtastic.com:7999/be/health_monitor.git" 
-
 ### Rails
 
 Add to you Rails configuration (config/application.rb)
@@ -59,7 +55,7 @@ This would lead to the following output f.e.:
 
     {
       status: "down",
-      name: "runtastic-web",
+      name: "my app",
       simple: [
       {
         status: "up",
