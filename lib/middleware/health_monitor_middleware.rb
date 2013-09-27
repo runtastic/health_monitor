@@ -9,7 +9,7 @@ class HealthMonitorMiddleware
   end
   
   def call(env)
-    if env["REQUEST_URI"] =~ /#{uri}/
+    if env["REQUEST_URI"] =~ /#{@uri}/
       request = Rack::Request.new(env)
 
       data = @@monitor.get_status(request.params)
