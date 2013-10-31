@@ -6,6 +6,7 @@ class HealthMonitor
     params.each do |k,v|
       self.send("#{k}=",v) if self.respond_to?("#{k}=")
     end
+    @targets ||= []
   end
 
   def get_status(params = {})
@@ -40,7 +41,6 @@ class HealthMonitor
   end
 
   def add_target(target)
-    @targets ||= []
     @targets << target
   end
 
