@@ -8,5 +8,4 @@ Gem::Specification.new do |s|
   s.email       = ['simi@runtastic.com, maf@runtastic.com']
   s.files       = ["lib/health_monitor.rb"]
   s.homepage    = ''
-  s.add_runtime_dependency 'benchmark'
 end
