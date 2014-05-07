@@ -18,7 +18,7 @@ class HealthMonitorMiddleware
       data[:time] = (Time.now - stime)
 
       if env["REQUEST_URI"] =~ /pingdom/
-        status = (data[:status] == "up") ? "OK" : "FAILED"
+        status = (data[:status] == :up) ? "OK" : "FAILED"
         xml_response = "<pingdom_http_custom_check><status>#{status}</status><response_time>#{data[:time]}</response_time></pingdom_http_custom_check>"
         [200, { 'Content-Type' => 'application/xml' },  [ xml_response ]]
       else
