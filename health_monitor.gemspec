@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'health_monitor'
-  s.version     = '0.6.0'
+  s.version     = '0.6.1'
   s.date        = '2013-09-16'
   s.summary     = "Monitor your db and services health!"
   s.description = "Monitoring"
