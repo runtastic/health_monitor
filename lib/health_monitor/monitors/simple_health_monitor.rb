@@ -2,10 +2,10 @@ class SimpleHealthMonitor < HealthMonitor
   def type
     :simple
   end
-  
+
   def info
   end
-  
+
   def initialize(params = {}, &block)
     params.each do |k,v|
       self.send("#{k}=",v) if self.respond_to?("#{k}=")
@@ -19,7 +19,7 @@ class SimpleHealthMonitor < HealthMonitor
       self.time = Benchmark.measure do
         self.status = !!@block.call if @block
       end.real * 1000
-    rescue 
+    rescue
       self.status = false
     end
 
@@ -31,4 +31,3 @@ class SimpleHealthMonitor < HealthMonitor
     result
   end
 end
-

@@ -1,11 +1,25 @@
-Gem::Specification.new do |s|
-  s.name        = 'health_monitor'
-  s.version     = '0.6.1'
-  s.date        = '2013-09-16'
-  s.summary     = "Monitor your db and services health!"
-  s.description = "Monitoring"
-  s.authors     = ["Siliva Mitter", "Martin Fuehrlinger"]
-  s.email       = ['simi@runtastic.com, maf@runtastic.com']
-  s.files       = ["lib/health_monitor.rb"]
-  s.homepage    = ''
+lib = File.expand_path("../lib", __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require "health_monitor/version"
+
+Gem::Specification.new do |spec|
+  spec.name          = "health_monitor"
+  spec.version       = HealthMonitor::VERSION
+  spec.authors       = ["Siliva Mitter", "Martin Fuehrlinger", "0xdco"]
+  spec.email         = ["simi@runtastic.com", "maf@runtastic.com", "wv@0xd.co"]
+
+  spec.summary       = "Monitor your db and services health!"
+  spec.description   = "Monitoring"
+  spec.homepage      = "https://github.com/runtastic/health_monitor"
+
+  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
+    f.match(%r{^(test|spec|features)/})
+  end
+  spec.bindir        = "exe"
+  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.require_paths = ["lib"]
+
+  spec.add_development_dependency "bundler", "~> 1.16"
+  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rspec", "~> 3.0"
 end

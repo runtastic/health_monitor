@@ -1,4 +1,4 @@
-class HealthMonitor 
+class HealthMonitor
 
   attr_accessor :name, :config, :status, :info, :time
 
@@ -10,15 +10,15 @@ class HealthMonitor
   end
 
   def get_status(params = {})
-    self.status = :up 
+    self.status = :up
 
     check = params["check"].try(:split,',') || @targets.map(&:name)
     check = check.map{ |t| t.downcase }
-    
+
     dont_check = params["dont_check"].try(:split,',') || []
     dont_check = dont_check.map{ |t| t.downcase }
 
-    result = { status: status, name: name } 
+    result = { status: status, name: name }
     result[:time] = time if time
     result[:info] = info.slice("simple","service") if info
 
@@ -27,11 +27,11 @@ class HealthMonitor
       next unless check.include?(target.name.downcase)
       next if dont_check.include?(target.name.downcase)
 
-      res = target.get_status 
+      res = target.get_status
 
       result[target.type] ||= []
       result[target.type] << res
-      
+
       result[:status] = :down if res[:status].to_sym == :down
     end
 
