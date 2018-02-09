@@ -3,6 +3,11 @@ Changelog
 
 master
 
+v0.7.2
+---
+
+* Require sidekiq/api to be able to use Sidekiq::ProcessSet
+
 v0.7.1
 ---
 
