@@ -100,3 +100,22 @@ This would lead to the following output f.e.:
       },
     ...
     }
+
+
+## Sidekiq Health Check Task
+
+A task for performing a Sidekiq health check is also included. To use that, just add the following line to your `Rakefile`
+
+```ruby
+require "health_monitor/rake_task"
+```
+
+You must have a `environment` task in your `Rakefile` which loads the environment.  Rails already provides such a task.
+
+A simple environment task looks like this:
+
+```ruby
+task :environment do
+  require_relative "./config/environment" if File.exists?("./config/environment")
+end
+```

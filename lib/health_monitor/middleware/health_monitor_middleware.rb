@@ -34,4 +34,3 @@ class HealthMonitorMiddleware
   end
 
 end
-
