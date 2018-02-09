@@ -3,6 +3,11 @@ Changelog
 
 master
 
+v0.7.1
+---
+
+* Fix scoping issue
+
 v0.7.0
 ---
 

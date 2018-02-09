@@ -9,7 +9,7 @@ class RakeTask
     desc "Check if Sidekiq is running"
     task "health_monitor:sidekiq:health" => :environment do
       hostname = ENV["HOSTNAME"] || `hostname -f`.strip
-      ps = Sidekiq::ProcessSet.new
+      ps = ::Sidekiq::ProcessSet.new
       up = ps.any? { |p| p["hostname"] == hostname && p["quiet"] == "false" }
 
       if up
