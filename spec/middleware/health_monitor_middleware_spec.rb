@@ -26,8 +26,8 @@ RSpec.describe HealthMonitorMiddleware do
       context 'health status is down' do
         let(:monitor_status) { :down }
 
-        it 'returns 200' do
-          expect(subject.first).to eq(200)
+        it 'returns 503' do
+          expect(subject.first).to eq(503)
         end
       end
 
