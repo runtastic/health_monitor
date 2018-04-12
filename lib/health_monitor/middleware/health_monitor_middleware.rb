@@ -1,3 +1,6 @@
+require 'rack'
+require 'json'
+
 class HealthMonitorMiddleware
 
   @@monitor = HealthMonitor.new(name: nil)
