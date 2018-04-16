@@ -3,10 +3,10 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "health_monitor/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "health_monitor"
+  spec.name          = "rt_health_monitor"
   spec.version       = HealthMonitor::VERSION
-  spec.authors       = ["Siliva Mitter", "Martin Fuehrlinger", "0xdco"]
-  spec.email         = ["simi@runtastic.com", "maf@runtastic.com", "wv@0xd.co"]
+  spec.authors       = ["Martin Fuehrlinger", "0xdco", "Georg Gadinger"]
+  spec.email         = ["maf@runtastic.com", "wv@0xd.co", "nilsding@nilsding.org"]
 
   spec.summary       = "Monitor your db and services health!"
   spec.description   = "Monitoring"
