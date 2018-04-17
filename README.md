@@ -8,7 +8,7 @@ Usage
 
 Add the gem to your Gemfile
 
-    gem 'health_monitor'
+    gem 'rt_health_monitor', require: 'health_monitor'
 
 Add the middleware to your config.
 
