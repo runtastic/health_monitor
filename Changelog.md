@@ -4,7 +4,7 @@ Changelog
 master
 ---
 
-v0.8.0 (unreleased)
+v0.8.0
 ---
 
 - Renamed gem to `rt_health_monitor`.  The directory names are still the same,
