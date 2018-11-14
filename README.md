@@ -80,7 +80,7 @@ end
 
 ### Sinatra
 
-Add the middleware to your config.ru
+Add the middleware to your `config.ru`
 
 ```ruby
 use HealthMonitorMiddleware, "your_application_name"
@@ -88,7 +88,7 @@ use HealthMonitorMiddleware, "your_application_name"
 
 ### Padrino
 
-Add the middleware to config/apps.rb
+Add the middleware to `config/apps.rb`
 
 ```ruby
 Padrino.use(HealthMonitorMiddleware, "your_application_name")
@@ -113,11 +113,11 @@ end
 ### Service monitors
 
 These can be used to monitor another service that is also using this gem. The block
-needs to return the result of the /healthmonitor endpoint of the other service:
+needs to return the result of the /health_monitor endpoint of the other service:
 
 ```ruby
 HealthMonitorMiddleware.add("service", name: 'some_service_name') do
-  RestClient.get("https://some-service.example.com/healthmonitor")
+  RestClient.get("https://some-service.example.com/health_monitor")
 end
 ```
 
@@ -143,9 +143,13 @@ end
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. You can
+also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`. To
+release a new version, update the version number in `version.rb`, and then run
+`bundle exec rake release`, which will create a git tag for the version, push git
+commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 Bug reports and pull requests are welcome on GitHub at https://github.com/runtastic/rt_health_monitor.
