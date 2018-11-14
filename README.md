@@ -113,7 +113,7 @@ end
 ### Service monitors
 
 These can be used to monitor another service that is also using this gem. The block
-needs to return the result of the /health_monitor endpoint of the other service:
+needs to return the result of the `/health_monitor` endpoint of the other service:
 
 ```ruby
 HealthMonitorMiddleware.add("service", name: 'some_service_name') do
