@@ -1,86 +1,18 @@
-# rt_health_monitor
+# RtHealthMonitor
 
-[![Gem Version](https://badge.fury.io/rb/rt_health_monitor.svg)](https://badge.fury.io/rb/rt_health_monitor)
+[![Gem Version](https://badge.fury.io/rb/rt_health_monitor.svg)][rubygems]
 
 Get information about your applications health status easily.
 
-## Installation
+As soon as the gem is configured and your application is running, you can
+access a health monitor status, e.g. http://example.com/health_monitor
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'rt_health_monitor', require: 'health_monitor'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install rt_health_monitor
-
-## Usage
-
-Add the middleware to your config.
-
-### Rails
-
-Add to you Rails configuration (config/application.rb)
-
-```ruby
-module <ApplicationName>
-  class Application < Rails::Application
-    config.middleware.use ::HealthMonitorMiddleware, "your_application_name"
-  end
-end
-```
-
-### Sinatra
-
-Add to config.ru
-
-```ruby
-use HealthMonitorMiddleware, "your_application_name"
-```
-
-### Padrino
-
-Add to config/apps.rb
-
-```ruby
-Padrino.use(HealthMonitorMiddleware, "your_application_name")
-```
-
-## Configure your dependencies
-
-Put into some place which is loaded on startup, like
-`config/initializer/health_monitor_initializer.rb`
-
-```ruby
-HealthMonitorMiddleware.add("simple", name: "MySQL") { User.where{id > 0}.limit(1) }
-
-HealthMonitorMiddleware.add("service", name: 'some_service_name') { RestClient.get(File.join(service-url, 'healthmonitor')) }
-```
-
-Simple-Monitor needs some block which returns true or false for up an down
-state. Service-Monitor needs an block which returns a complete status response
-in JSON format. This may be just the health-monitor used by a service.
-
-## Outcome
-
-As soon as the middleware is configured and your application is running, you can
-acess the health monitor status page adding 'health_monitor' to your url. It does
-not depend on the given path.
-
-    http://your_application_url_with_some_path/health_monitor
-
-This would lead to the following output:
+This would produce the following output:
 
 ```json
 {
   "status": "down",
-  "name": "my app",
+  "name": "my service",
   "simple": [
     {
       "status": "up",
@@ -91,22 +23,12 @@ This would lead to the following output:
       "status": "up",
       "name": "Memcached",
       "time": 1.4078617095947266
-    },
-    {
-      "status": "up",
-      "name": "Resque",
-      "time": 3.2737255096435547
     }
   ],
   "service": [
     {
-      "status": "down",
-      "name": "routes",
-      "time": 1295.3431606292725
-    },
-    {
       "status": "up",
-      "name": "appendix",
+      "name": "another service",
       "info": {
         "simple": [
           {
@@ -122,14 +44,84 @@ This would lead to the following output:
         ]
       },
       "time": 23.989439010620117
-    },
-    ...
+    }
   ]
 }
 ```
 
+## Installation
+Add this line to your application's Gemfile:
 
-## Sidekiq Health Check Task
+```ruby
+gem 'rt_health_monitor', require: 'health_monitor'
+```
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install rt_health_monitor
+
+## Configuration
+
+### Rails
+
+Add the middleware to your Rails configuration
+
+```ruby
+module <ApplicationName>
+  class Application < Rails::Application
+    config.middleware.use ::HealthMonitorMiddleware, "your_application_name"
+  end
+end
+```
+
+### Sinatra
+
+Add the middleware to your config.ru
+
+```ruby
+use HealthMonitorMiddleware, "your_application_name"
+```
+
+### Padrino
+
+Add the middleware to config/apps.rb
+
+```ruby
+Padrino.use(HealthMonitorMiddleware, "your_application_name")
+```
+
+## Usage
+
+Put the following configurations some place where they are loaded on startup,
+like `config/initializer/health_monitor_initializer.rb`
+
+### Simple monitors
+These can be used to monitor a database connection or anything that can be in two
+states.
+
+Example:
+```ruby
+HealthMonitorMiddleware.add("simple", name: "MySQL") do
+  ActiveRecord::Base.connected?
+end
+```
+
+### Service monitors
+
+These can be used to monitor another service that is also using this gem. The block
+needs to return the result of the /healthmonitor endpoint of the other service:
+
+```ruby
+HealthMonitorMiddleware.add("service", name: 'some_service_name') do
+  RestClient.get("https://some-service.example.com/healthmonitor")
+end
+```
+
+### Sidekiq Health Check Task
 
 A task for performing a Sidekiq health check is also included. To use that, just
 add the following line to your `Rakefile`
@@ -138,8 +130,8 @@ add the following line to your `Rakefile`
 require "health_monitor/rake_task"
 ```
 
-You must have a `environment` task in your `Rakefile` which loads the
-environment.  Rails already provides such a task.
+You must have an `environment` task in your `Rakefile` which loads the
+environment. Rails already provides such a task.
 
 A simple environment task looks like this:
 
@@ -148,3 +140,22 @@ task :environment do
   require_relative "./config/environment" if File.exists?("./config/environment")
 end
 ```
+
+## Development
+
+After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
+## Contributing
+Bug reports and pull requests are welcome on GitHub at https://github.com/runtastic/rt_health_monitor.
+This project is intended to be a safe, welcoming space for collaboration, and
+contributors are expected to adhere to the [code of conduct][cc].
+
+## License
+The gem is available as open source under [the terms of the MIT License][mit].
+
+[travis]: https://travis-ci.org/runtastic/rt_health_monitor
+[rubygems]: https://rubygems.org/gems/rt_health_monitor
+[mit]: https://choosealicense.com/licenses/mit/
+[cc]: ../CODE_OF_CONDUCT.md
